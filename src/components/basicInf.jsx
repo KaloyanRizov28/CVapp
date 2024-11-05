@@ -7,7 +7,7 @@ export default function MyForm(){ // use this to show the form when cliking on e
         phoneUser:''
 
     })
-    let buttonInside ="Submit"
+    
     const handleBasicInf = (e) => {
         const name = e.target.name;
         const value = e.target.value;
