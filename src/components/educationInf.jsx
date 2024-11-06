@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './styles/mian.css'
 
 export default function EducationInf(){
     const [showForm, setShowForm] = useState(false);
@@ -62,80 +63,82 @@ export default function EducationInf(){
       };
       
 
-return(
- <>   
-  <h3>Education info:</h3>
- <button onClick={handleClick}>{showForm ? <div>Close</div>: <div>Add Education Section</div>}</button>
- {showForm && 
- <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col">
-            <label className="mb-1">
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={currentEducation.name}
-                onChange={handleEducationInf}
-                className="border rounded p-2 w-full"
-                required
-              />
-            </label>
+      return (
+        <div className="section-card">
+          <div className="section-header">
+            <h3 className="section-title">Education Info</h3>
+            <button 
+              className={`btn ${showForm ? 'btn-danger' : 'btn-primary'}`}
+              onClick={handleClick}
+            >
+              {showForm ? 'Close' : 'Add Education'}
+            </button>
           </div>
-
-          <div className="flex flex-col">
-            <label className="mb-1">
-              From:
-              <input
-                type="date"
-                name="from"
-                value={currentEducation.from}
-                onChange={handleEducationInf}
-                className="border rounded p-2 w-full"
-                required
-              />
-            </label>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="mb-1">
-              Till:
-              <input
-                type="date"
-                name="till"
-                value={currentEducation.till}
-                onChange={handleEducationInf}
-                className="border rounded p-2 w-full"
-                required
-              />
-            </label>
-          </div>
-
-          <button 
-            type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
-        </form>
-}
-
-{educationList.map((edu, index) => (
-        <div key={index} className="mb-4 p-3 border rounded">
-          <p><strong>Name:</strong> {edu.name}</p>
-          <p><strong>From:</strong> {edu.from}</p>
-          <p><strong>Till:</strong> {edu.till}</p>
-          <button 
-            onClick={() => handleDelete(index)}
-            className="mt-2 text-red-600 hover:text-red-800"
-          >
-            Delete
-          </button>
-          <button
-          onClick={() => handleEdit(index)}>Edit</button>
-          
+    
+          {showForm && (
+            <form onSubmit={handleSubmit} className="form-container">
+              <div className="form-group">
+                <label>Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={currentEducation.name}
+                  onChange={handleEducationInf}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>From:</label>
+                <input
+                  type="date"
+                  name="from"
+                  value={currentEducation.from}
+                  onChange={handleEducationInf}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Till:</label>
+                <input
+                  type="date"
+                  name="till"
+                  value={currentEducation.till}
+                  onChange={handleEducationInf}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-success">
+                Submit
+              </button>
+            </form>
+          )}
+    
+          {educationList.map((edu, index) => (
+            <div key={index} className="info-card">
+              <div className="info-card-header">
+                <h4 className="info-card-title">{edu.name}</h4>
+                <div className="button-group">
+                  <button 
+                    onClick={() => handleEdit(index)}
+                    className="btn btn-primary"
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(index)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <p className="info-card-subtitle">From: {edu.from}</p>
+              <p className="info-card-subtitle">Till: {edu.till}</p>
+            </div>
+          ))}
         </div>
-      ))}
- 
- </>
-)
-}
+      );
+    }
