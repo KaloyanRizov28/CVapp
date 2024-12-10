@@ -8,7 +8,7 @@ import CVPreview from './CVPreview';
 
 export default function CardInput() {
   return (
-    <div className="h-[calc(100vh-65px)] p-5 pr-12">
+    <div className="h-[100dvh] sm:h-[calc(100dvh-65px)] p-5 pr-12">
       <div className="grid grid-cols-2 gap-6 h-full">
         
         <Card className="h-full overflow-auto">

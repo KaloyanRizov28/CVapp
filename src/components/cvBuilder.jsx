@@ -26,7 +26,7 @@ import {
   const [experience, setExperience] = useState([]);
 
   return (
-    <div className="min-h-[calc(100vh-64px)] p-4 md:p-6 lg:p-8">
+    <div className="min-h-[calc(100dvh-64px)] p-4 md:p-6 lg:p-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
         
         <Card className="h-full overflow-auto">
