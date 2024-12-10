@@ -53,104 +53,79 @@ export default function Experience({ experience, setExperience }) {
 
   return (
     <Card>
-      <CardHeader className="flex justify-between items-center px-6">
-        <h3 className="text-xl font-bold">Professional Experience</h3>
-        <Button variant="shadow"
-          color={showForm ? "danger" : "warning"}
-          onClick={() => setShowForm(!showForm)}
-        >
-          {showForm ? 'Close' : 'Add Experience'}
-        </Button>
-      </CardHeader>
-      <CardBody className="gap-4">
-        {showForm && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                label="Company Name"
-                value={currentExperience.company}
-                onValueChange={(value) => handleExperienceInput(value, 'company')}
-                variant="bordered"
-                isRequired
-              />
-              <Input
-                label="Position"
-                value={currentExperience.position}
-                onValueChange={(value) => handleExperienceInput(value, 'position')}
-                variant="bordered"
-                isRequired
-              />
-            </div>
-
-            <Textarea
-              label="Description"
-              value={currentExperience.description}
-              onValueChange={(value) => handleExperienceInput(value, 'description')}
+    <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4 py-3 sm:px-6">
+      <h3 className="text-xl font-bold">Professional Experience</h3>
+      <Button
+        variant="shadow"
+        color={showForm ? "danger" : "primary"}
+        size="sm"
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? 'Close' : 'Add Experience'}
+      </Button>
+    </CardHeader>
+    <CardBody className="gap-4 px-4 sm:px-6">
+      {showForm && (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Company Name"
+              value={currentExperience.company}
+              onValueChange={(value) => handleExperienceInput(value, 'company')}
               variant="bordered"
-              minRows={3}
               isRequired
             />
+            <Input
+              label="Position"
+              value={currentExperience.position}
+              onValueChange={(value) => handleExperienceInput(value, 'position')}
+              variant="bordered"
+              isRequired
+            />
+          </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                label="From"
-                type="date"
-                value={currentExperience.from}
-                onValueChange={(value) => handleExperienceInput(value, 'from')}
-                variant="bordered"
-                isRequired
-              />
-              <Input
-                label="Till"
-                type="date"
-                value={currentExperience.till}
-                onValueChange={(value) => handleExperienceInput(value, 'till')}
-                variant="bordered"
-                isDisabled={currentExperience.current}
-                isRequired={!currentExperience.current}
-              />
-            </div>
+          <Textarea
+            label="Description"
+            value={currentExperience.description}
+            onValueChange={(value) => handleExperienceInput(value, 'description')}
+            variant="bordered"
+            minRows={3}
+            isRequired
+          />
 
-            <Checkbox
-              isSelected={currentExperience.current}
-              onValueChange={(checked) => handleExperienceInput(checked, 'current')}
-            >
-              I currently work here
-            </Checkbox>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+          </div>
+        </form>
+      )}
 
-            <Button color="warning" type="submit" variant="shadow">
-              {editIndex !== null ? 'Update Experience' : 'Add Experience'}
-            </Button>
-          </form>
-        )}
-
-        <div className="flex flex-col gap-4">
-          {experience.map((exp, index) => (
-            <Card key={index} shadow="sm">
-              <CardBody>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="text-lg font-semibold">{exp.company}</h4>
-                    <p className="font-medium">{exp.position}</p>
-                    <p className="text-sm text-gray-600">
-                      {exp.from} - {exp.current ? 'Present' : exp.till}
-                    </p>
-                    <p className="mt-2 text-gray-700">{exp.description}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" color="primary" onClick={() => handleEdit(index)}>
-                      Edit
-                    </Button>
-                    <Button size="sm" color="danger" onClick={() => handleDelete(index)}>
-                      Delete
-                    </Button>
-                  </div>
+      <div className="flex flex-col gap-4">
+        {experience.map((exp, index) => (
+          <Card key={index} shadow="sm">
+            <CardBody>
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                <div className="w-full">
+                  <h4 className="text-lg font-semibold">{exp.company}</h4>
+                  <p className="font-medium">{exp.position}</p>
+                  <p className="text-sm text-gray-600">
+                    {exp.from} - {exp.current ? 'Present' : exp.till}
+                  </p>
+                  <p className="mt-2 text-gray-700">{exp.description}</p>
                 </div>
-              </CardBody>
-            </Card>
-          ))}
-        </div>
-      </CardBody>
-    </Card>
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <Button size="sm" color="primary" onClick={() => handleEdit(index)} fullWidth>
+                    Edit
+                  </Button>
+                  <Button size="sm" color="danger" onClick={() => handleDelete(index)} fullWidth>
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        ))}
+      </div>
+    </CardBody>
+  </Card>
   );
 }

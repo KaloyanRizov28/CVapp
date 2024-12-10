@@ -47,7 +47,7 @@ export default function Education({ education, setEducation }) {
         <h3 className="text-xl font-bold">Education</h3>
         <Button
           variant="shadow"
-          color={showForm ? "danger" : "warning"}
+          color={showForm ? "danger" : "primary"}
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Close' : 'Add Education'}

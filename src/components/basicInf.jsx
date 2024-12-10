@@ -13,16 +13,18 @@ export default function BasicInfo({ basicInfo, setBasicInfo }) {
 
   return (
     <Card>
-      <CardHeader className="flex justify-between items-center px-6">
+      <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4 py-3 sm:px-6">
         <h3 className="text-xl font-bold">Basic Information</h3>
-        <Button variant="shadow"
-          color={showForm ? "danger" : "warning"}
+        <Button 
+          variant="shadow"
+          color={showForm ? "danger" : "primary"}
+          size="sm"
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Submit' : 'Edit'}
         </Button>
       </CardHeader>
-      <CardBody className="gap-4">
+      <CardBody className="gap-4 px-4 sm:px-6">
         {showForm && (
           <div className="flex flex-col gap-4">
             <Input
@@ -30,21 +32,24 @@ export default function BasicInfo({ basicInfo, setBasicInfo }) {
               value={basicInfo.nameUser}
               onValueChange={(value) => handleInfoChange(value, 'nameUser')}
               variant="bordered"
+              fullWidth
             />
-            <Input
-              label="Email"
-              type="email"
-              value={basicInfo.emailUser}
-              onValueChange={(value) => handleInfoChange(value, 'emailUser')}
-              variant="bordered"
-            />
-            <Input
-              label="Phone"
-              type="tel"
-              value={basicInfo.phoneUser}
-              onValueChange={(value) => handleInfoChange(value, 'phoneUser')}
-              variant="bordered"
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                label="Email"
+                type="email"
+                value={basicInfo.emailUser}
+                onValueChange={(value) => handleInfoChange(value, 'emailUser')}
+                variant="bordered"
+              />
+              <Input
+                label="Phone"
+                type="tel"
+                value={basicInfo.phoneUser}
+                onValueChange={(value) => handleInfoChange(value, 'phoneUser')}
+                variant="bordered"
+              />
+            </div>
           </div>
         )}
       </CardBody>
