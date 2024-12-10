@@ -1,9 +1,8 @@
 import { useState } from "react";
-import './styles/mian.css';
+import { Card, CardHeader, CardBody, Button, Input, Textarea, Checkbox } from "@nextui-org/react";
 
-export default function PracticalExperience() {
+export default function Experience({ experience, setExperience }) {
   const [showForm, setShowForm] = useState(false);
-  const [experienceList, setExperienceList] = useState([]);
   const [currentExperience, setCurrentExperience] = useState({
     company: '',
     position: '',
@@ -14,51 +13,23 @@ export default function PracticalExperience() {
   });
   const [editIndex, setEditIndex] = useState(null);
 
-  const handleShowForm = () => {
-    setShowForm(!showForm);
-    if (showForm) {
-      setCurrentExperience({
-        company: '',
-        position: '',
-        description: '',
-        from: '',
-        till: '',
-        current: false
-      });
-      setEditIndex(null);
-    }
-  };
-
-  const handleExperienceInput = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleExperienceInput = (value, field) => {
     setCurrentExperience(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [field]: value
     }));
-  };
-
-  const handleEdit = (index) => {
-    setCurrentExperience(experienceList[index]);
-    setEditIndex(index);
-    setShowForm(true);
-  };
-
-  const handleDelete = (index) => {
-    setExperienceList(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     if (editIndex !== null) {
-      setExperienceList(prev => prev.map((item, index) => 
+      setExperience(prev => prev.map((item, index) => 
         index === editIndex ? currentExperience : item
       ));
       setEditIndex(null);
     } else {
-      setExperienceList(prev => [...prev, currentExperience]);
+      setExperience(prev => [...prev, currentExperience]);
     }
-    
     setCurrentExperience({
       company: '',
       position: '',
@@ -70,129 +41,116 @@ export default function PracticalExperience() {
     setShowForm(false);
   };
 
+  const handleEdit = (index) => {
+    setCurrentExperience(experience[index]);
+    setEditIndex(index);
+    setShowForm(true);
+  };
+
+  const handleDelete = (index) => {
+    setExperience(prev => prev.filter((_, i) => i !== index));
+  };
+
   return (
-    <div className="section-card">
-      <div className="section-header">
-        <h3 className="section-title">Professional Experience</h3>
-        <button 
-          className={`btn ${showForm ? 'btn-danger' : 'btn-primary'}`}
-          onClick={handleShowForm}
+    <Card>
+      <CardHeader className="flex justify-between items-center px-6">
+        <h3 className="text-xl font-bold">Professional Experience</h3>
+        <Button variant="shadow"
+          color={showForm ? "danger" : "warning"}
+          onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Close' : 'Add Experience'}
-        </button>
-      </div>
-
-      {showForm && (
-        <form onSubmit={handleSubmit} className="form-container">
-          <div className="grid-container" style={{ gap: '1rem' }}>
-            <div className="form-group">
-              <label>Company Name:</label>
-              <input
-                type="text"
-                name="company"
+        </Button>
+      </CardHeader>
+      <CardBody className="gap-4">
+        {showForm && (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="Company Name"
                 value={currentExperience.company}
-                onChange={handleExperienceInput}
-                className="form-control"
-                required
+                onValueChange={(value) => handleExperienceInput(value, 'company')}
+                variant="bordered"
+                isRequired
               />
-            </div>
-            <div className="form-group">
-              <label>Position:</label>
-              <input
-                type="text"
-                name="position"
+              <Input
+                label="Position"
                 value={currentExperience.position}
-                onChange={handleExperienceInput}
-                className="form-control"
-                required
+                onValueChange={(value) => handleExperienceInput(value, 'position')}
+                variant="bordered"
+                isRequired
               />
             </div>
-          </div>
 
-          <div className="form-group">
-            <label>Description:</label>
-            <textarea
-              name="description"
+            <Textarea
+              label="Description"
               value={currentExperience.description}
-              onChange={handleExperienceInput}
-              className="form-control"
-              rows="3"
-              required
+              onValueChange={(value) => handleExperienceInput(value, 'description')}
+              variant="bordered"
+              minRows={3}
+              isRequired
             />
-          </div>
 
-          <div className="grid-container" style={{ gap: '1rem' }}>
-            <div className="form-group">
-              <label>From:</label>
-              <input
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="From"
                 type="date"
-                name="from"
                 value={currentExperience.from}
-                onChange={handleExperienceInput}
-                className="form-control"
-                required
+                onValueChange={(value) => handleExperienceInput(value, 'from')}
+                variant="bordered"
+                isRequired
               />
-            </div>
-            <div className="form-group">
-              <label>Till:</label>
-              <input
+              <Input
+                label="Till"
                 type="date"
-                name="till"
                 value={currentExperience.till}
-                onChange={handleExperienceInput}
-                className="form-control"
-                disabled={currentExperience.current}
-                required={!currentExperience.current}
+                onValueChange={(value) => handleExperienceInput(value, 'till')}
+                variant="bordered"
+                isDisabled={currentExperience.current}
+                isRequired={!currentExperience.current}
               />
             </div>
-          </div>
 
-          <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <input
-              type="checkbox"
-              name="current"
-              checked={currentExperience.current}
-              onChange={handleExperienceInput}
-              id="current-position"
-              style={{ width: 'auto' }}
-            />
-            <label htmlFor="current-position" style={{ margin: 0 }}>I currently work here</label>
-          </div>
+            <Checkbox
+              isSelected={currentExperience.current}
+              onValueChange={(checked) => handleExperienceInput(checked, 'current')}
+            >
+              I currently work here
+            </Checkbox>
 
-          <button type="submit" className="btn btn-success" style={{ width: '100%', marginTop: '1rem' }}>
-            {editIndex !== null ? 'Update Experience' : 'Add Experience'}
-          </button>
-        </form>
-      )}
+            <Button color="warning" type="submit" variant="shadow">
+              {editIndex !== null ? 'Update Experience' : 'Add Experience'}
+            </Button>
+          </form>
+        )}
 
-      {experienceList.map((exp, index) => (
-        <div key={index} className="info-card">
-          <div className="info-card-header">
-            <div>
-              <h4 className="info-card-title">{exp.company}</h4>
-              <p className="info-card-subtitle">{exp.position}</p>
-              <p className="info-card-subtitle">
-                {exp.from} - {exp.current ? 'Present' : exp.till}
-              </p>
-            </div>
-            <div className="button-group">
-              <button
-                onClick={() => handleEdit(index)}
-                className="btn btn-primary"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(index)}
-                className="btn btn-danger"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-          <p style={{ marginTop: '1rem', color: 'var(--text-primary)' }}>{exp.description}</p>
+        <div className="flex flex-col gap-4">
+          {experience.map((exp, index) => (
+            <Card key={index} shadow="sm">
+              <CardBody>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="text-lg font-semibold">{exp.company}</h4>
+                    <p className="font-medium">{exp.position}</p>
+                    <p className="text-sm text-gray-600">
+                      {exp.from} - {exp.current ? 'Present' : exp.till}
+                    </p>
+                    <p className="mt-2 text-gray-700">{exp.description}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button size="sm" color="primary" onClick={() => handleEdit(index)}>
+                      Edit
+                    </Button>
+                    <Button size="sm" color="danger" onClick={() => handleDelete(index)}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+          ))}
         </div>
-      ))}
-    </div>
+      </CardBody>
+    </Card>
   );
 }

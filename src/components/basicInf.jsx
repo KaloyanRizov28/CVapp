@@ -1,79 +1,53 @@
-import {useState} from 'react';
-import './styles/mian.css'
-export default function MyForm(){ // use this to show the form when cliking on edit.
-    const [showForm, setShowForm] = useState(true);
-    const [basicInf, setBasicInf] = useState({nameUser:'',
-        emailUser:'',
-        phoneUser:''
+import { useState } from "react";
+import { Card, CardHeader, CardBody, Button, Input } from "@nextui-org/react";
 
-    })
-    
-    const handleBasicInf = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        
-        setBasicInf({...basicInf,[name]:value})
+export default function BasicInfo({ basicInfo, setBasicInfo }) {
+  const [showForm, setShowForm] = useState(true);
 
-    }
-    const handleShowForm = () => {
-        
-        setShowForm(!showForm);
+  const handleInfoChange = (value, field) => {
+    setBasicInfo(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
-    
-    }
-    
-    return (
-      <div className="section-card">
-      <div className="section-header">
-        <h3 className="section-title">Basic Info</h3>
-        <button 
-          className={`btn ${showForm ? 'btn-danger' : 'btn-primary'}`}
-          onClick={handleShowForm}
+  return (
+    <Card>
+      <CardHeader className="flex justify-between items-center px-6">
+        <h3 className="text-xl font-bold">Basic Information</h3>
+        <Button variant="shadow"
+          color={showForm ? "danger" : "warning"}
+          onClick={() => setShowForm(!showForm)}
         >
           {showForm ? 'Submit' : 'Edit'}
-        </button>
-      </div>
-
-      {showForm && (
-        <form className="form-container">
-          <div className="form-group">
-            <label>Name:</label>
-            <input
-              type="text"
-              name="nameUser"
-              value={basicInf.nameUser || ""}
-              onChange={handleBasicInf}
-              className="form-control"
+        </Button>
+      </CardHeader>
+      <CardBody className="gap-4">
+        {showForm && (
+          <div className="flex flex-col gap-4">
+            <Input
+              label="Full Name"
+              value={basicInfo.nameUser}
+              onValueChange={(value) => handleInfoChange(value, 'nameUser')}
+              variant="bordered"
             />
-          </div>
-          <div className="form-group">
-            <label>Phone Number:</label>
-            <input
-              type="tel"
-              name="phoneUser"
-              value={basicInf.phoneUser || ""}
-              onChange={handleBasicInf}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
+            <Input
+              label="Email"
               type="email"
-              name="emailUser"
-              value={basicInf.emailUser || ""}
-              onChange={handleBasicInf}
-              className="form-control"
+              value={basicInfo.emailUser}
+              onValueChange={(value) => handleInfoChange(value, 'emailUser')}
+              variant="bordered"
+            />
+            <Input
+              label="Phone"
+              type="tel"
+              value={basicInfo.phoneUser}
+              onValueChange={(value) => handleInfoChange(value, 'phoneUser')}
+              variant="bordered"
             />
           </div>
-        </form>
-      )}
-
-      <div className="info-card">
-        <h4 className="info-card-title">Name: {basicInf.nameUser}</h4>
-        <p className="info-card-subtitle">Phone: {basicInf.phoneUser}</p>
-        <p className="info-card-subtitle">Email: {basicInf.emailUser}</p>
-      </div>
-    </div>
+        )}
+      </CardBody>
+    </Card>
   );
 }
