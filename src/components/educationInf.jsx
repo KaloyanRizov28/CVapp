@@ -48,7 +48,7 @@ export default function Education({ education, setEducation }) {
         <Button
           variant="shadow"
           color={showForm ? "danger" : "primary"}
-          onClick={() => setShowForm(!showForm)}
+          onPress={() => setShowForm(!showForm)}
         >
           {showForm ? 'Close' : 'Add Education'}
         </Button>
@@ -97,10 +97,10 @@ export default function Education({ education, setEducation }) {
                     <p className="text-sm text-gray-600">{edu.from} - {edu.till}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" color="primary" onClick={() => handleEdit(index)}>
+                    <Button size="sm" color="primary" onPress={() => handleEdit(index)}>
                       Edit
                     </Button>
-                    <Button size="sm" color="danger" onClick={() => handleDelete(index)}>
+                    <Button size="sm" color="danger" onPress={() => handleDelete(index)}>
                       Delete
                     </Button>
                   </div>

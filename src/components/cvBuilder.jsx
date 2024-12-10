@@ -53,7 +53,7 @@ import {
         <Button
           className="fixed bottom-4 right-4 lg:hidden"
           color="primary"
-          onClick={onOpen}
+          onPress={onOpen}
            variant="shadow"
         >
           Preview CV

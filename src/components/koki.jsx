@@ -59,7 +59,7 @@ export default function Experience({ experience, setExperience }) {
         variant="shadow"
         color={showForm ? "danger" : "primary"}
         size="sm"
-        onClick={() => setShowForm(!showForm)}
+        onPress={() => setShowForm(!showForm)}
       >
         {showForm ? 'Close' : 'Add Experience'}
       </Button>
@@ -113,10 +113,10 @@ export default function Experience({ experience, setExperience }) {
                   <p className="mt-2 text-gray-700">{exp.description}</p>
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto">
-                  <Button size="sm" color="primary" onClick={() => handleEdit(index)} fullWidth>
+                  <Button size="sm" color="primary" onPress={() => handleEdit(index)} fullWidth>
                     Edit
                   </Button>
-                  <Button size="sm" color="danger" onClick={() => handleDelete(index)} fullWidth>
+                  <Button size="sm" color="danger" onPress={() => handleDelete(index)} fullWidth>
                     Delete
                   </Button>
                 </div>

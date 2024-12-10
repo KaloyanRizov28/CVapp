@@ -19,7 +19,7 @@ export default function BasicInfo({ basicInfo, setBasicInfo }) {
           variant="shadow"
           color={showForm ? "danger" : "primary"}
           size="sm"
-          onClick={() => setShowForm(!showForm)}
+          onPress={() => setShowForm(!showForm)}
         >
           {showForm ? 'Submit' : 'Edit'}
         </Button>
